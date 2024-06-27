@@ -1,0 +1,121 @@
+@media only screen and (max-width: 768px) {
+  .home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: none;
+  }
+
+  .home .imageContainer img {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .headerContainer {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+  }
+
+  .headerContainer h1 {
+    font-size: 25px;
+    color: black;
+    margin-bottom: 10px;
+  }
+
+  .headerContainer p {
+    font-size: 20px;
+    color: black;
+    margin-bottom: 10px;
+  }
+
+  .headerContainer button {
+    background-color: #121619;
+    color: #f2f2f2;
+    padding: 8px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+
+  .headerContainer button:hover {
+    background-color: rgba(18, 22, 25, 0.8);
+    color: #f2f2f2;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .home {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
+    background-image: url(../assets/background.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+  }
+
+  .home img {
+    display: none;
+  }
+
+  .headerContainer {
+    width: 800px;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  p,
+  h1 {
+    margin-top: 10px;
+    margin-bottom: 100px;
+  }
+  .headerContainer h1 {
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    height: 30px;
+    font-weight: 50;
+    color: white;
+    text-shadow: 2px 2px 5px #000;
+  }
+
+  .headerContainer p {
+    padding: 0;
+    font-size: 30px;
+    font-weight: lighter;
+    color: white;
+    text-shadow: 2px 2px 5px #000;
+  }
+
+  .headerContainer button {
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    justify-content: center;
+    background-color: #121619;
+    height: 50px;
+    width: 180px;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+  }
+
+  .headerContainer button:hover {
+    background-color: #f2f2f2;
+    color: #121619;
+    cursor: pointer;
+    transition: 0.3s ease-in;
+  }
+}

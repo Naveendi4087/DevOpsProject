@@ -1,0 +1,13 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - '5000:5000'
+    environment:
+      - mongodb+srv://Thasha:thasha@cluster0.tpcr3a1.mongodb.net/Saloon?retryWrites=true&w=majority
+
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
