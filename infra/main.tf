@@ -13,7 +13,7 @@ data "aws_vpc" "main" {
 # }
 
 data "aws_subnet" "subnet" {
-    id = "subnet-04bc5de7ee1e33467"
+    id = "subnet-0f124cf04da93d0a6"
 }
 
 
