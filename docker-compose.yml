@@ -2,7 +2,7 @@ version: '3'
 services:
   backend:
     image: thashara/backendv1:5
-    platform: linux/arm64
+    platform: linux/amd64
     ports:
       - '5000:5000'
     environment:
@@ -10,6 +10,6 @@ services:
 
   frontend:
     image: thashara/frontendv1:5
-    platform: linux/arm64
+    platform: linux/amd64
     ports:
       - '3000:3000'
