@@ -1,53 +1,51 @@
 pipeline {
-    agent any
-triggers{
-    githubPush()
-  }
-    environment {
-        REPO_URL = 'https://github.com/Naveendi4087/DevOpsProject.git'
-        BRANCH = 'main'
-        DOCKER_REGISTRY = 'thashara'
-        APP_NAME = 'DevOpsProject'
+    agent any 
+
+    stages { 
+        stage('SCM Checkout') {
+            steps {
+                retry(3) {
+                    git branch: 'main', url: 'https://github.com/Naveendi4087/DevOpsProject'
+                }
+            }
+        }
+        stage('Build backend Docker Image') {
+            steps {  
+                dir('backend') {
+                    bat 'docker build -t thashara/backendv1:%BUILD_NUMBER% .'
+                }
+            }
+        }
+        stage('Build frontend Docker Image') {
+            steps {
+                dir('frontend') {
+                    sh 'docker build -t thashara/frontendv1:%BUILD_NUMBER% .'
+                }
+            }
+        }
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([string(credentialsId: 'devops-password', variable: 'devopspassword')]) {
+                    script {
+                        sh "docker login -u thashara -p %devopspassword%"
+                    }
+                }
+            }
+        }
+        stage('Push backend Image') {
+            steps {
+                sh 'docker push thashara/backendv1:%BUILD_NUMBER%'
+            }
+        }
+        stage('Push frontend Image') {
+            steps {
+                sh 'docker push thashara/frontendv1:%BUILD_NUMBER%'
+            }
+        }
     }
-
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git branch: "${BRANCH}", url: "${REPO_URL}"
-            }
-        }
-        stage('Install Dependencies'){
-            steps{
-                echo 'Installing Dependencies...'
-
-            }
-        }
-
-        stage('Build Docker Images') {
-            steps {
-                script {
-                    sh 'docker-compose build'
-                }
-            }
-        }
-
-        stage('Push Docker Images') {
-            steps {
-                script {
-                    sh '''
-                    docker-compose push
-                    '''
-                }
-            }
-        }
-
-        stage('Deploy Application') {
-            steps {
-                script {
-                    sh 'docker-compose down'
-                    sh 'docker-compose up -d'
-                }
-            }
+    post {
+        always {
+            sh 'docker logout'
         }
     }
 }
