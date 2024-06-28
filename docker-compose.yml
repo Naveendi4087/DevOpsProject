@@ -1,13 +1,13 @@
 version: '3'
 services:
   backend:
-    build: ./backend
+    image: thashara/backendv1:5
     ports:
       - '5000:5000'
     environment:
-      - mongodb+srv://Thasha:thasha@cluster0.tpcr3a1.mongodb.net/Saloon?retryWrites=true&w=majority
+      - MONGO_URI=mongodb+srv://Thasha:thasha@cluster0.tpcr3a1.mongodb.net/Saloon?retryWrites=true&w=majority
 
   frontend:
-    build: ./frontend
+    image: thashara/frontendv1:5
     ports:
       - '3000:3000'
