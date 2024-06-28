@@ -25,9 +25,9 @@ pipeline {
         }
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([string(credentialsId: 'devops-password', variable: 'devopspassword')]) {
+                withCredentials([string(credentialsId: 'devopspassword', variable: 'devopspass')]) {
                     script {
-                        sh "docker login -u thashara -p %devopspassword%"
+                        sh "docker login -u thashara -p %devopspass%"
                     }
                 }
             }
