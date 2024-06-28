@@ -12,7 +12,7 @@ pipeline {
         stage('Build backend Docker Image') {
             steps {  
                 dir('backend') {
-                    bat 'docker build -t thashara/backendv1:%BUILD_NUMBER% .'
+                    sh 'docker build -t thashara/backendv1:%BUILD_NUMBER% .'
                 }
             }
         }
