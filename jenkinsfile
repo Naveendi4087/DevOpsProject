@@ -1,45 +1,52 @@
 pipeline {
     agent any 
 
+    environment {
+        REPO_URL = 'https://github.com/Naveendi4087/DevOpsProject.git'
+        BRANCH = 'main'
+        DOCKER_REGISTRY = 'thashara'
+        DOCKER_USER = 'thashara'
+        DOCKER_PASS = credentials('devopspassword') 
+        APP_NAME = 'DevOpsProject'
+    }
+
     stages { 
         stage('SCM Checkout') {
             steps {
                 retry(3) {
-                    git branch: 'main', url: 'https://github.com/Naveendi4087/DevOpsProject'
+                    git branch: "${BRANCH}", url: "${REPO_URL}"
                 }
             }
         }
         stage('Build backend Docker Image') {
             steps {  
                 dir('backend') {
-                    sh 'docker build -t thashara/backendv1:%BUILD_NUMBER% .'
+                    sh 'docker build -t ${DOCKER_REGISTRY}/backendv1:${BUILD_NUMBER} .'
                 }
             }
         }
         stage('Build frontend Docker Image') {
             steps {
                 dir('frontend') {
-                    sh 'docker build -t thashara/frontendv1:%BUILD_NUMBER% .'
+                    sh 'docker build -t ${DOCKER_REGISTRY}/frontendv1:${BUILD_NUMBER} .'
                 }
             }
         }
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([string(credentialsId: 'devopspassword', variable: 'devopspass')]) {
-                    script {
-                        sh "docker login -u thashara -p %devopspass%"
-                    }
+                script {
+                    sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
                 }
             }
         }
         stage('Push backend Image') {
             steps {
-                sh 'docker push thashara/backendv1:%BUILD_NUMBER%'
+                sh 'docker push ${DOCKER_REGISTRY}/backendv1:${BUILD_NUMBER}'
             }
         }
         stage('Push frontend Image') {
             steps {
-                sh 'docker push thashara/frontendv1:%BUILD_NUMBER%'
+                sh 'docker push ${DOCKER_REGISTRY}/frontendv1:${BUILD_NUMBER}'
             }
         }
     }
